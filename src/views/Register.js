@@ -51,10 +51,11 @@ export default class Register extends Component {
           }
         )
           .then((response) => {
-            // console.log(response);
+             console.log(response);
             if (response.data === "OK") {
+              console.log(response.data)
               this.setState({loading:false})
-              this.props.navigation.navigate('enterOtpScreen',{Phone:this.state.CellNo});
+              this.props.navigation.navigate('Home',{Phone:this.state.CellNo});
             }
             else {
               this.setState({loading:false});
@@ -91,6 +92,8 @@ export default class Register extends Component {
 
     return (
       <ScrollView style={styles.safeArea}>
+      <View style={{ backgroundColor: '#000', height: '4%', }}></View>
+
             <Text style={[styles.Heading]}>Registration </Text>
             <TextInput
               style={[styles.InputField]}

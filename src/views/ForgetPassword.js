@@ -29,6 +29,8 @@ export default class ForgetPassword extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safeArea}>
+      <View style={{ backgroundColor: '#000', height: '4%', }}></View>
+
             <Text style={[styles.Heading]}>Forget Password </Text>
             <TextInput
               style={[styles.InputField]}

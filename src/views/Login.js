@@ -19,7 +19,7 @@ export default class RegisterDetails extends Component {
       errorText: '',
       loading: false,
       LoginID: '',
-      password: ''
+      password: '',
     };
   }
 
@@ -84,6 +84,8 @@ export default class RegisterDetails extends Component {
   render() {
     return (
       <SafeAreaView style={styles.safeArea}>
+      <View style={{ backgroundColor: '#000', height: '4%', }}></View>
+
         <Text style={[styles.Heading]}>Login </Text>
         <TextInput
           style={[styles.InputField]}
@@ -113,6 +115,7 @@ export default class RegisterDetails extends Component {
         />
         <Text style={{ color: 'red', fontSize: 20, alignSelf: 'center', marginTop: 15 }}>{this.state.errorText}</Text>
         {this.renderButton()}
+
 
         <TouchableOpacity
           style={[styles.btnForget]}

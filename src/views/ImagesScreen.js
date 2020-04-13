@@ -10,7 +10,10 @@ import {
   Modal
 } from 'react-native';
 //import ImagePicker from 'react-native-image-picker';
-import ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
+
 import { FontAwesome, Entypo, Feather,Fontisto, Ionicons } from '@expo/vector-icons';
 
 export default class ImagesScreen extends React.Component {
@@ -22,21 +25,28 @@ export default class ImagesScreen extends React.Component {
     };
   }
   SelectImage = async () => {
-    ImagePicker.showImagePicker({ noData: true, mediaType: 'photo' }, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        this.setState((prevState) => {
-          return {
-            avatarSource: [...prevState.avatarSource, response.uri]
-          }
-        })
-      }
-    });
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      }, (response) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          this.setState({ Picture: response })
+          console.log(this.state.Picture);
+        }
+      });
+      console.log(result);
+    } catch (E) {
+      console.log(E);
+    }
   }
   renderRow = ({ item }) => {
     return (
@@ -46,6 +56,7 @@ export default class ImagesScreen extends React.Component {
     )
   }
   render() {
+    
     return (
       <SafeAreaView style={styles.safeArea}>
         <View style={{ height: 50, backgroundColor: '#ff611b' }}>

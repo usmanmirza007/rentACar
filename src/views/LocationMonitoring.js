@@ -14,8 +14,6 @@ import {
 import Assets from '../assets/Assets';
 import { FontAwesome, Entypo, Feather,Fontisto, MaterialCommunityIcons } from '@expo/vector-icons';
 import MapView, { Marker, Callout, AnimatedRegion } from 'react-native-maps';
-// import Geolocation from '@react-native-community/geolocation';
-
 export default class LocationMonitoring extends React.Component {
 
   constructor(props) {
@@ -29,6 +27,7 @@ export default class LocationMonitoring extends React.Component {
       Model: '',
     }
   }
+
   // componentDidMount() {
     // navigator.geolocation.getCurrentPosition(
     //   position => {
@@ -49,25 +48,11 @@ export default class LocationMonitoring extends React.Component {
     let myMap;
     return (
       <SafeAreaView style={styles.safeArea}>
+      <View style={{ backgroundColor: '#000', height: '4%', }}></View>
+
         <View style={{ height: 50, backgroundColor: '#ff611b', justifyContent: 'center' }}>
           <Feather style={{ color: 'white', marginLeft: 15, }} name="menu" size={30} onPress={() => this.props.navigation.openDrawer('AppDrawerNavigator')} />
         </View>
-        {/* <View style={styles.InputStyle}>
-          <Picker
-            mode="dropdown"
-            selectedValue={this.state.Model}
-            placeholder="Company"
-            style={{ height: 50, width: '100%', paddingLeft: 0 }}
-            selectedValue
-            onValueChange={(itemValue) =>
-              this.setState({ Model: itemValue })
-            }>
-            <Picker.Item label="Select a Car" value="" />
-            <Picker.Item label="Car 1" value="Car 1" />
-            <Picker.Item label="Car 2" value="Car 2" />
-            <Picker.Item label="Car 3" value="Car 3" />
-          </Picker>
-        </View> */}
         <MapView
           ref={ref => myMap = ref}
           style={styles.map}
@@ -79,15 +64,10 @@ export default class LocationMonitoring extends React.Component {
           }}
         >
           <Marker
-            coordinate={
-              // this.state.region
-              // this.state.latitude,
-              // this.state.longitude
-              {
+            coordinate={{
                 latitude: 24.8270,
                 longitude: 67.0251,
-              }
-            }
+              }}
             onPress={() => {
               myMap.fitToCoordinates([{
                 latitude: 24.8270,
@@ -153,15 +133,6 @@ export default class LocationMonitoring extends React.Component {
     );
   }
 }
-
-LocationMonitoring.navigationOptions = ({ navigation }) => {
-  return {
-    drawerLabel: 'Location Monitoring',
-    drawerIcon: ({ tintColor }) => (
-      <Entypo style={{ color: tintColor, }} name="location-pin" size={25} />
-    )
-  };
-};
 
 const styles = StyleSheet.create({
   safeArea: {

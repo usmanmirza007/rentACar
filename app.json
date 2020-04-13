@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "RentACar",
-    "slug": "RentACar",
+    "name": "RentACarAgent",
+    "slug": "RentACarAgent",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
@@ -25,10 +25,10 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.gdtm.RentACar"
+      "bundleIdentifier": "com.gdtm.RentACarAgent"
     },
     "android": {
-      "package": "com.gdtm.RentACar"
+      "package": "com.gdtm.RentACarAgent"
     },
     "description": ""
   }

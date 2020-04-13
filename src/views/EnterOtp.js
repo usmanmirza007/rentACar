@@ -40,9 +40,10 @@ export default class EnterOtp extends Component {
         }
       )
         .then((response) => {
-          console.log(response);
-          // console.log(response.data.data);
-          // console.log(response.data.data[0].Response);
+          
+           //console.log("data",response);
+          // console.log(response.data);
+          console.log("data", response.data.data[0].Response);
           // console.log(response.data.data[0].Response);
           if (response.data[0].Response === "OK") {
             this.setState({ loading: false })
@@ -79,6 +80,8 @@ export default class EnterOtp extends Component {
 
     return (
       <SafeAreaView style={styles.safeArea}>
+      <View style={{ backgroundColor: '#000', height: '4%', }}></View>
+
         <View style={styles.container}>
           <View style={styles.containContent}>
             <Text style={[styles.Heading]}>Enter OTP</Text>

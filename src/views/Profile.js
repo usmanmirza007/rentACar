@@ -14,7 +14,9 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 //import ImagePicker from 'react-native-image-picker';
-import ImagePicker from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import Constants from 'expo-constants';
+import * as Permissions from 'expo-permissions';
 
 import axios from 'axios';
 import SpinnerScreen from './Spinner';
@@ -33,6 +35,7 @@ export default class Profile extends React.Component {
       Picture: '',
       loading: false,
       showMe: false,
+      
     };
   }
 
@@ -58,10 +61,7 @@ export default class Profile extends React.Component {
         alert("Please enter CityID");
         return;
       }
-      else if (this.state.Picture === '') {
-        alert("Please enter Picture");
-        return;
-      }
+      
       else {
         this.setState({ loading: true })
         axios.post(`http://51.77.6.84:9110/UM/UserProfile`,
@@ -71,7 +71,7 @@ export default class Profile extends React.Component {
             "PhoneNo": PhoneNo,
             "Email": Email,
             "CityId": CityID,
-            "Picture": Picture.data,
+            "Picture": Picture,
           }
         )
           .then((response) => {
@@ -141,24 +141,50 @@ export default class Profile extends React.Component {
       )
     }
   }
-  SelectImage = async () => {
-    ImagePicker.launchImageLibrary({ mediaType: 'photo', }, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        this.setState({ Picture: response })
-        console.log(this.state.Picture);
-      }
-    });
+  componentDidMount() {
+    this.getPermissionAsync();
   }
+
+  getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  };
+  
+  SelectImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      }, (response) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.error) {
+          console.log('ImagePicker Error: ', response.error);
+        } else if (response.customButton) {
+          console.log('User tapped custom button: ', response.customButton);
+        } else {
+          this.setState({ Picture: response })
+          console.log(this.state.Picture);
+        }
+      });
+      console.log(result);
+    } catch (E) {
+      console.log(E);
+    }
+  }
+
 
   render() {
     return (
       <SafeAreaView style={styles.safeArea}>
+      <View style={{ backgroundColor: '#000', height: '4%', }}></View>
+
         <View style={{ height: 50, backgroundColor: '#ff611b' }}>
           <Feather style={{ color: 'white', margin: 15, }} name="menu" size={30} onPress={() => this.props.navigation.openDrawer('AppDrawerNavigator')} />
         </View>

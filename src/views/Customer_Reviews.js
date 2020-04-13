@@ -14,6 +14,8 @@ export default class Customer_Reviews extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.safeArea}>
+      <View style={{ backgroundColor: '#000', height: '4%', }}></View>
+
         <View style={{ height: 50, backgroundColor: '#ff611b' }}>
           <Feather style={{ color: 'white', margin: 15, }} name="menu" size={30} onPress={() => this.props.navigation.openDrawer('AppDrawerNavigator')} />
         </View>
